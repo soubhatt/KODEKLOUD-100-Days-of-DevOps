@@ -1,0 +1,9 @@
+ssh tony@stapp01
+sudo -i
+yum install -y cronie
+systemctl start crond
+systemctl enable --now crond
+systemctl status crond
+crontab -e
+*/5 * * * * echo hello > /tmp/cron_text 
+sudo crontab -l

@@ -1,0 +1,25 @@
+ssh steve@stapp02
+sudo -i
+yum install nginx -y
+mkdir -p /etc/nginx/ssl
+mv /tmp/nautilus.crt /etc/nginx/ssl/
+mv /tmp/nautilus.key /etc/nginx/ssl/
+chmod 600 /etc/nginx/ssl/nautilus.key
+chmod 644 /etc/nginx/ssl/nautilus.crt
+vi /etc/nginx/nginx.conf
+	server { 
+	listen 443 ssl;
+ 	server_name _;
+ 	ssl_certificate /etc/nginx/ssl/nautilus.crt;
+ 	ssl_certificate_key /etc/nginx/ssl/nautilus.key;
+ 	root /usr/share/nginx/html;
+ 	index index.html;
+ 		}
+:wq
+echo "Welcome!" > /usr/share/nginx/html/index.html
+nginx -t
+systemctl enable --now nginx
+systemctl restart nginx
+systemctl status nginx
+# From jump host, test the SSL connection {Response: 200 OK}
+curl -Ik https://stapp02/

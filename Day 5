@@ -1,0 +1,11 @@
+ssh steve@stapp02
+sudo -i
+yum install -y policycoreutils selinux-policy-targeted
+ls -l /etc/selinux/config
+vi /etc/selinux/config
+	SELINUX=disabled
+	:wq
+cat /etc/selinux/config | grep SELINUX=
+setenforce 0
+getenforce
+sestatus

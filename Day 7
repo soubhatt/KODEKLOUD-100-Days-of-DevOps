@@ -1,0 +1,19 @@
+sudo su - thor # on jumpserver we need to create key
+ssh-keygen -t rsa
+# Copy ssh key to app server 1
+ssh-copy-id tony@172.16.238.10
+# Copy ssh key to app server 2
+ssh-copy-id steve@172.16.238.11
+# Copy ssh key to app server 3
+ssh-copy-id banner@172.16.238.12
+# For each server we have to disable password based login
+For all servers stapp01/02/03
+vi /etc/ssh/sshd_config
+	PermitRootLogin no
+	PasswordAuthentication no
+	:wq
+systemctl restart sshd
+# Verify password-less SSH login
+ssh tony@stapp01
+ssh steve@stapp02
+ssh banner@stapp03

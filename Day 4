@@ -1,0 +1,5 @@
+ssh banner@stapp03
+sudo -i
+ls -l /tmp/xfusioncorp.sh 
+chmod 555 /tmp/xfusioncorp.sh 
+ls -l /tmp/xfusioncorp.sh

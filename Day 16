@@ -1,0 +1,32 @@
+ssh tony@stapp01
+sudo -i
+systemctl status httpd
+grep -i ^listen /etc/httpd/conf/httpd.conf
+
+# log into LBR server
+ssh loki@stlb01
+yum install -y nginx
+vi /etc/nginx/nginx.conf
+# Adding the lines in red
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+    upstream app_servers {
+    server stapp01.stratos.xfusioncorp.com:6300;
+    server stapp02.stratos.xfusioncorp.com:6300;
+    server stapp03.stratos.xfusioncorp.com:6300;
+}
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+        location / {
+            proxy_pass http://app_servers;
+        }
+        # Load configuration files for the default server block.
+:wq
+sudo nginx -t
+systemctl enable --now nginx
+sudo systemctl restart nginx

@@ -1,0 +1,12 @@
+ssh tony@stapp01
+sudo -i
+systemctl status httpd
+netstat -tulnp | grep 8089
+tcp        0      0 127.0.0.1:8087          0.0.0.0:* LISTEN      882/sendmail: accept
+kill -9 882
+iptables -I INPUT 4 -p tcp --dport 8089 -j ACCEPT
+service iptables save
+systemctl restart iptables
+systemctl restart httpd
+# Verification from Jump Host
+curl http://stapp01:8083

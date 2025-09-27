@@ -1,0 +1,21 @@
+# Install httpd, php and its dependencies on all app hosts
+yum install -y httpd php php-mysqlnd php-fpm php-cli
+systemctl enable --now httpd
+systemctl start httpd
+vi /etc/httpd/conf/httpd.conf
+	Listen 80
+:wq
+systemctl restart httpd
+
+# Install and Configure MariaDB on DB Server
+ssh peter@stdb01
+sudo -i
+yum install -y mariadb-server mariadb
+systemctl enable --now mariadb
+systemctl start mariadb
+mysql -u root
+CREATE DATABASE kodekloud_db7;
+CREATE USER 'kodekloud_top'@'%' IDENTIFIED BY '8FmzjvFU6S';
+GRANT ALL PRIVILEGES ON kodekloud_db7.* TO 'kodekloud_top'@'%';
+FLUSH PRIVILEGES;
+EXIT;

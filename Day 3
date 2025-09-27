@@ -1,0 +1,7 @@
+ssh banner@stapp03
+sudo -i
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+vi /etc/ssh/sshd_config
+	PermitRootLogin no
+	:wq
+systemctl restart sshd

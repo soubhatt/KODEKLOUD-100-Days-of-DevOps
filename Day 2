@@ -1,0 +1,7 @@
+ssh tony@stapp01
+sudo -i
+useradd natasha
+usermod -e 2024-04-15 natasha
+# Verify the user and expiry date
+id natasha
+chage -l natasha

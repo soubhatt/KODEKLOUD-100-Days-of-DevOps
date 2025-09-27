@@ -1,0 +1,4 @@
+ssh steve@stapp02
+sudo useradd -s /sbin/nologin thor  
+grep thor /etc/passwd
+sudo su - john  # Verify the login is failing

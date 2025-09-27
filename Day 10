@@ -1,0 +1,46 @@
+ssh steve@stapp02
+sudo -i
+# Create the script and folder in App Server 2
+mkdir -p /scripts
+vi /scripts/media_backup.sh
+mkdir -p /backup
+yum install zip
+yum install unzip
+
+# Create backup folder in Nautilus Backup Server
+ssh clint@172.16.238.16
+sudo mkdir -p /backup
+=======media_backup.sh========
+#!/bin/bash
+SRC_DIR="/var/www/html/media"
+BACKUP_NAME="xfusioncorp_media.zip"
+LOCAL_BACKUP_DIR="/backup"
+REMOTE_USER="clint"      
+REMOTE_HOST="stbkp01"
+REMOTE_DIR="/backup"
+#Creating zip archive of media directory
+zip -r "${LOCAL_BACKUP_DIR}/${BACKUP_NAME}" "$SRC_DIR"
+#Copying archive to Nautilus Backup Server
+scp "${LOCAL_BACKUP_DIR}/${BACKUP_NAME}" "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}/"
+:wq
+chown steve:steve /scripts/media_backup.sh
+chmod 755 /scripts/media_backup.sh
+ssh-keygen -t rsa -N '' -f /home/steve/.ssh/id_rsa
+chmod 700 /home/steve/.ssh
+chmod 600 /home/steve/.ssh/id_rsa
+chmod 644 /home/steve/.ssh/id_rsa.pub
+
+# Copy public key to backup server
+ssh-copy-id clint@172.16.238.16
+# Test SSH connection without password
+ssh clint@172.16.238.16
+exit
+
+# Test the script
+/scripts/media_backup.sh
+
+# Check locally on App Server 2
+ls -la /backup/
+# Check on the backup server
+ssh clint@172.16.238.16 "ls -la /backup/xfusioncorp_media.zip"
+

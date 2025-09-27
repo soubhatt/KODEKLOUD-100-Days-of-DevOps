@@ -1,0 +1,16 @@
+ssh peter@stdb01
+sudo -i
+systemctl status mariadb
+systemctl restart mariadb
+journalctl -xe mariadb
+journalctl -xe mysql
+tail /var/log/mariadb/mariadb.log
+[ERROR] InnoDB: Operating system error number 13 in a file operation.
+[ERROR] InnoDB: The error means mysqld does not have the access rights to the directory.
+[ERROR] InnoDB: Cannot open datafile './ibtmp1'
+[ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+ls -ld /var/lib/mysql
+    drwxr-xr-x 1 root mysql 4096 Sep 12 05:48 /var/lib/mysql
+chown -R mysql:mysql /var/lib/mysql
+systemctl restart mariadb
+systemctl status mariadb

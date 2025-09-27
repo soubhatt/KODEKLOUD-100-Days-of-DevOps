@@ -1,0 +1,16 @@
+# From Jump Host terminal
+scp /tmp/ROOT.war banner@stapp03:/tmp/
+ssh banner@stapp03
+sudo -i
+yum install -y tomcat tomcat-webapps tomcat-admin-webapps
+chown tomcat:tomcat /var/lib/tomcat/webapps/
+mv /tmp/ROOT.war /var/lib/tomcat/webapps/
+vi /etc/tomcat/server.xml
+	<Connector port="3001" protocol="HTTP/1.1"
+	:wq
+systemctl enable --now tomcat
+systemctl start tomcat
+systemctl status tomcat
+exit
+# Test the Application
+curl http://stapp03:3001

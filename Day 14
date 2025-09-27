@@ -1,0 +1,8 @@
+ssh banner@stapp03
+sudo -i
+netstat -tulnp | grep 6003
+systemctl stop sendmail
+systemctl disable sendmail
+systemctl enable --now httpd
+systemctl restart httpd
+systemctl status httpd

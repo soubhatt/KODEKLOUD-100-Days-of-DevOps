@@ -1,0 +1,10 @@
+# on jumpserver we need to install ansible
+cat /etc/*release 
+python3 --version 
+pip3 --version
+echo 'export PATH=$PATH:/usr/local/bin' | sudo tee -a /etc/profile
+source /etc/profile
+sudo pip3 install ansible==4.7.0
+ansible --version
+which ansible
+pip3 show ansible

@@ -1,0 +1,8 @@
+ssh peter@stdb01
+sudo su - postgres
+psql
+postgres=# CREATE USER kodekloud_gem WITH PASSWORD 'B4zNgHA7Ya';
+postgres=# \du
+postgres=# CREATE DATABASE kodekloud_db7;
+postgres=# \l
+postgres=# GRANT ALL PRIVILEGES ON DATABASE kodekloud_db7 To kodekloud_gem;
