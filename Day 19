@@ -1,0 +1,54 @@
+#install httpd on stapp01 Server
+yum install -y httpd
+
+# copy the content of app and blog from jumphost Server
+scp ~/blog tony@stapp01:/var/www/html/blog
+scp ~/apps Tony@stapp01:/var/www/html/apps
+
+[root@stapp01]# chown -R /var/www/html
+[root@stapp01]# cd /etc/httpd/conf
+[root@stapp01 conf]# vi httpd.conf
+<VirtualHost *:3002>
+    ServerName localhost
+    DocumentRoot /var/www/html
+
+    Alias /blog /var/www/html/blog
+    <Directory /var/www/html/blog>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    Alias /apps /var/www/html/apps
+    <Directory /var/www/html/apps>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+Listen 3002
+
+[root@stapp01]# systemctl restart httpd
+[root@stapp01]# curl http://localhost:3002/blog/
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>KodeKloud</h1>
+
+<p>This is a sample page for our blog website</p>
+
+</body>
+</html>
+
+[root@stapp01]# curl http://localhost:3002/apps/
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>KodeKloud</h1>
+
+<p>This is a sample page for our apps website</p>
+
+</body>
+</html>
