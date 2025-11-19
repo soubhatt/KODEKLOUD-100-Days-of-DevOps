@@ -1,0 +1,75 @@
+thor@jumphost ~$ ssh natasha@ststor01
+The authenticity of host 'ststor01 (172.16.238.15)' can't be established.
+ED25519 key fingerprint is SHA256:CQptGKr4OJVZPMCHJ1g0HNj3z32esuCa/JQOxn0V2p4.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ststor01' (ED25519) to the list of known hosts.
+natasha@ststor01's password: 
+[natasha@ststor01 ~]$ sudo -i
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+[sudo] password for natasha: 
+[root@ststor01 ~]# cd /usr/src/kodekloudrepos
+[root@ststor01 kodekloudrepos]# ls -al
+total 12
+drwxr-xr-x 3 root root 4096 Nov 19 10:53 .
+drwxr-xr-x 1 root root 4096 Nov 19 10:53 ..
+drwxr-xr-x 3 root root 4096 Nov 19 10:53 official
+[root@ststor01 kodekloudrepos]# cd official
+[root@ststor01 official]# git checkout master
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+[root@ststor01 official]# git branch
+* master
+[root@ststor01 official]# git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+[root@ststor01 official]# git checkout -b xfusion
+Switched to a new branch 'xfusion'
+[root@ststor01 official]# git branch
+  master
+* xfusion
+[root@ststor01 official]# cp /tmp/index.html .
+[root@ststor01 official]# ls
+index.html  info.txt  welcome.txt
+[root@ststor01 official]# git add .
+[root@ststor01 official]# git status
+On branch xfusion
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   index.html
+
+[root@ststor01 official]# git commit -m "adding the index file"
+[xfusion 019e0b5] adding the index file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 index.html
+[root@ststor01 official]# git status
+On branch xfusion
+nothing to commit, working tree clean
+[root@ststor01 official]# git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+[root@ststor01 official]# git merge xfusion
+Updating 790ea6a..019e0b5
+Fast-forward
+ index.html | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 index.html
+[root@ststor01 official]# git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 335 bytes | 335.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To /opt/official.git
+   790ea6a..019e0b5  master -> master
+[root@ststor01 official]# 
